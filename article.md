@@ -1,162 +1,45 @@
 # Time Series Analysis in Earth Science Modeling climate, seismic, and hydrological change using temporal
 methods and satellite data
 
-::::### **Time Series Analysis in Earth Science** 
+### **Time Series Analysis in Earth Science** 
 
 #### Modeling climate, seismic, and hydrological change using temporal methods and satellite data
-Time series analysis plays a central role in understanding the Earth's
-systems. Natural processes unfold over time and often follow observable
-rhythms, trends, and disruptions. Many Earth science datasets take the
-form of sequences, where measurements occur at regular or irregular
-intervals. These temporal patterns hold clues to physical forces at
-work, but they also contain noise, missing values, and structural
-changes. Time series methods help scientists extract meaningful
-information from this complexity.
+Time series analysis plays a central role in understanding the Earth's systems. Natural processes unfold over time and often follow observable rhythms, trends, and disruptions. Many Earth science datasets take the form of sequences, where measurements occur at regular or irregular intervals. These temporal patterns hold clues to physical forces at work, but they also contain noise, missing values, and structural changes. Time series methods help scientists extract meaningful information from this complexity.
 
-Environmental data often arrive as time series. Climate records track
-surface temperature, carbon dioxide, and precipitation across daily,
-monthly, or annual intervals. Seismographs record continuous ground
-motion that can hint at tectonic activity. Hydrological systems generate
-data on river discharge, reservoir levels, and groundwater fluctuations.
-Remote sensing contributes vast amounts of imagery, which when indexed
-over time, form dense stacks of vegetation indices, thermal anomalies,
-or atmospheric concentrations.
+Environmental data often arrive as time series. Climate records track surface temperature, carbon dioxide, and precipitation across daily, monthly, or annual intervals. Seismographs record continuous ground motion that can hint at tectonic activity. Hydrological systems generate data on river discharge, reservoir levels, and groundwater fluctuations. Remote sensing contributes vast amounts of imagery, which when indexed over time, form dense stacks of vegetation indices, thermal anomalies, or atmospheric concentrations.
 
-Each of these time series carries multiple layers. Long-term trends
-reveal directional change. Seasonal cycles reflect planetary tilt, solar
-radiation, and orbital mechanics. Random noise, instrument error, or
-unknown influences make interpretation more difficult. Analysts use time
-series decomposition to separate these elements. The trend component may
-show warming or drying over decades. The seasonal component may reflect
-recurring droughts or melt seasons. The residual captures what remains
-unexplained.
+Each of these time series carries multiple layers. Long-term trends reveal directional change. Seasonal cycles reflect planetary tilt, solar radiation, and orbital mechanics. Random noise, instrument error, or unknown influences make interpretation more difficult. Analysts use time series decomposition to separate these elements. The trend component may show warming or drying over decades. The seasonal component may reflect recurring droughts or melt seasons. The residual captures what remains unexplained.
 
-Detecting trends in Earth science data requires care. Long-term
-temperature increases, for example, must be separated from cyclical
-variations such as El Niño. Forest loss, observed via NDVI or other
-vegetation metrics, should be evaluated in light of seasonal regrowth
-and land-use changes. Time series analysis allows for statistically
-valid identification of such shifts.
+Detecting trends in Earth science data requires care. Long-term temperature increases, for example, must be separated from cyclical variations such as El Niño. Forest loss, observed via NDVI or other vegetation metrics, should be evaluated in light of seasonal regrowth and land-use changes. Time series analysis allows for statistically valid identification of such shifts.
 
-[**Tracking Houston's Green Cover with Satellite NDVI using Remote
-Sensing and Python**\
-*Change often happens in ways we can't quite see --- until we pull back
-far enough. From high above Earth,
-satellites...*medium.com](https://medium.com/@kylejones_47003/tracking-houstons-green-cover-with-satellite-ndvi-using-remote-sensing-and-python-46320dbe3933 "https://medium.com/@kylejones_47003/tracking-houstons-green-cover-with-satellite-ndvi-using-remote-sensing-and-python-46320dbe3933")[](https://medium.com/@kylejones_47003/tracking-houstons-green-cover-with-satellite-ndvi-using-remote-sensing-and-python-46320dbe3933)
-Seasonality remains a key feature in most Earth systems. Temperature
-typically follows an annual cycle, especially in mid-latitude regions.
-Precipitation may follow monsoonal or bimodal patterns. Ocean
-temperatures oscillate across seasonal and interannual timescales.
-Recognizing and modeling seasonality improves forecasts and isolates
-irregular changes.
+[**Tracking Houston's Green Cover with Satellite NDVI using Remote Sensing and Python**\ *Change often happens in ways we can't quite see --- until we pull back far enough. From high above Earth, satellites...*medium.com](https://medium.com/@kylejones_47003/tracking-houstons-green-cover-with-satellite-ndvi-using-remote-sensing-and-python-46320dbe3933 "https://medium.com/@kylejones_47003/tracking-houstons-green-cover-with-satellite-ndvi-using-remote-sensing-and-python-46320dbe3933")[](https://medium.com/@kylejones_47003/tracking-houstons-green-cover-with-satellite-ndvi-using-remote-sensing-and-python-46320dbe3933) Seasonality remains a key feature in most Earth systems. Temperature typically follows an annual cycle, especially in mid-latitude regions. Precipitation may follow monsoonal or bimodal patterns. Ocean temperatures oscillate across seasonal and interannual timescales. Recognizing and modeling seasonality improves forecasts and isolates irregular changes.
 
-Anomaly detection uses time series models to flag deviations from
-expected behavior. These could signal critical events. In seismology,
-subtle shifts in ground motion may precede larger earthquakes. In
-climate records, an abrupt spike in sea surface temperature may herald a
-developing El Niño. In water systems, rapid inflows may indicate flash
-floods or glacial lake outbursts.
+Anomaly detection uses time series models to flag deviations from expected behavior. These could signal critical events. In seismology, subtle shifts in ground motion may precede larger earthquakes. In climate records, an abrupt spike in sea surface temperature may herald a developing El Niño. In water systems, rapid inflows may indicate flash floods or glacial lake outbursts.
 
-Statistical stationarity --- the idea that the properties of a time
-series do not change over time --- rarely holds in raw Earth science
-data. Researchers often apply transformations such as differencing, log
-transforms, or detrending to stabilize variance or mean levels.
-Stationarity matters because many forecasting models assume it,
-including ARIMA and related approaches.
+Statistical stationarity --- the idea that the properties of a time series do not change over time --- rarely holds in raw Earth science data. Researchers often apply transformations such as differencing, log transforms, or detrending to stabilize variance or mean levels. Stationarity matters because many forecasting models assume it, including ARIMA and related approaches.
 
-Autocorrelation --- how present values relate to past
-values --- describes the memory in a process. Earth systems often show
-strong autocorrelation due to inertia and feedbacks. Ocean-atmosphere
-systems like ENSO exhibit autocorrelation across multi-year periods. Ice
-core records show autocorrelation across glacial and interglacial
-cycles. These dependencies help build more accurate predictive models.
+Autocorrelation --- how present values relate to past values --- describes the memory in a process. Earth systems often show strong autocorrelation due to inertia and feedbacks. Ocean-atmosphere systems like ENSO exhibit autocorrelation across multi-year periods. Ice core records show autocorrelation across glacial and interglacial cycles. These dependencies help build more accurate predictive models.
 
-Modern time series analysis in Earth science goes beyond simple
-regression or seasonal adjustment. State-space models represent systems
-as a set of latent, unobserved states and observed outputs. Kalman
-filters update model states as new data arrive, and are widely used in
-numerical weather prediction and satellite data assimilation. Particle
-filters extend this approach to nonlinear systems, such as modeling
-eruptions from volcanoes with chaotic precursors.
+Modern time series analysis in Earth science goes beyond simple regression or seasonal adjustment. State-space models represent systems as a set of latent, unobserved states and observed outputs. Kalman filters update model states as new data arrive, and are widely used in numerical weather prediction and satellite data assimilation. Particle filters extend this approach to nonlinear systems, such as modeling eruptions from volcanoes with chaotic precursors.
 
-Bayesian time series methods introduce probabilistic reasoning. This is
-valuable when data are sparse, uncertain, or hierarchical. For instance,
-Bayesian Structural Time Series (BSTS) models allow scientists to assess
-the effect of land use policies on deforestation trends. Hierarchical
-models can account for nested structures, such as river basins within
-watersheds or climate regimes within continents.
+Bayesian time series methods introduce probabilistic reasoning. This is valuable when data are sparse, uncertain, or hierarchical. For instance, Bayesian Structural Time Series (BSTS) models allow scientists to assess the effect of land use policies on deforestation trends. Hierarchical models can account for nested structures, such as river basins within watersheds or climate regimes within continents.
 
-Spatiotemporal models capture variation across both time and space.
-Earth science data almost always involve both dimensions. Gaussian
-Process Regression can model smooth fields like soil moisture or air
-temperature, allowing interpolation across unsampled regions. In deep
-learning, Convolutional-LSTM models track the evolution of wildfire
-fronts, learning spatial and temporal dependencies jointly.
+Spatiotemporal models capture variation across both time and space. Earth science data almost always involve both dimensions. Gaussian Process Regression can model smooth fields like soil moisture or air temperature, allowing interpolation across unsampled regions. In deep learning, Convolutional-LSTM models track the evolution of wildfire fronts, learning spatial and temporal dependencies jointly.
 
-Frequency-based methods also remain important. Fourier transforms
-decompose signals into sine and cosine waves, useful for identifying
-regular cycles such as tidal patterns or solar radiation variation.
-Wavelet transforms handle nonstationary signals better, capturing
-localized periodic features. This proves useful in climate science where
-signals such as ENSO evolve in both frequency and time.
+Frequency-based methods also remain important. Fourier transforms decompose signals into sine and cosine waves, useful for identifying regular cycles such as tidal patterns or solar radiation variation. Wavelet transforms handle nonstationary signals better, capturing localized periodic features. This proves useful in climate science where signals such as ENSO evolve in both frequency and time.
 
-Machine learning has expanded the frontier of time series analysis.
-Recurrent Neural Networks (RNNs), particularly LSTMs and GRUs, model
-long-range dependencies in sequences. Transformers, originally developed
-for language modeling, now excel in climate forecasting and seismic data
-analysis. Hybrid models combine physical process equations with machine
-learning to improve accuracy and interpretability.
+Machine learning has expanded the frontier of time series analysis. Recurrent Neural Networks (RNNs), particularly LSTMs and GRUs, model long-range dependencies in sequences. Transformers, originally developed for language modeling, now excel in climate forecasting and seismic data analysis. Hybrid models combine physical process equations with machine learning to improve accuracy and interpretability.
 
-Time series applications in Earth science span many domains. In climate
-science, researchers use long records of surface temperature and
-greenhouse gas concentrations to quantify anthropogenic impacts.
-Transformer models trained on multivariate climate data now forecast
-heatwaves with growing accuracy. In seismology, pattern recognition on
-seismic waveforms allows for rapid earthquake detection and
-classification. Aftershock sequences can be modeled as temporal
-cascades, providing insight into fault system dynamics.
+Time series applications in Earth science span many domains. In climate science, researchers use long records of surface temperature and greenhouse gas concentrations to quantify anthropogenic impacts. Transformer models trained on multivariate climate data now forecast heatwaves with growing accuracy. In seismology, pattern recognition on seismic waveforms allows for rapid earthquake detection and classification. Aftershock sequences can be modeled as temporal cascades, providing insight into fault system dynamics.
 
-Hydrological modeling also benefits. Coupled physical and statistical
-models now support flood forecasting and reservoir management. Bayesian
-models offer a principled approach to quantify uncertainty in water
-availability. In remote sensing, time series of NDVI or thermal imagery
-support the tracking of crop health, deforestation, and urbanization.
-Satellite-derived temperature time series map the growth of urban heat
-islands, informing adaptation strategies.
+Hydrological modeling also benefits. Coupled physical and statistical models now support flood forecasting and reservoir management. Bayesian models offer a principled approach to quantify uncertainty in water availability. In remote sensing, time series of NDVI or thermal imagery support the tracking of crop health, deforestation, and urbanization. Satellite-derived temperature time series map the growth of urban heat islands, informing adaptation strategies.
 
-Oceanographic models use time series methods to analyze sea surface
-temperatures, salinity, and currents. ENSO modeling remains a core
-application, integrating satellite data and physical models through data
-assimilation frameworks. Gaussian processes help forecast ocean currents
-in regions with sparse observational data.
+Oceanographic models use time series methods to analyze sea surface temperatures, salinity, and currents. ENSO modeling remains a core application, integrating satellite data and physical models through data assimilation frameworks. Gaussian processes help forecast ocean currents in regions with sparse observational data.
 
-A representative case lies in Antarctic ice sheet dynamics.
-Understanding the pace and pattern of melting involves multiple
-datasets: altimetry from satellites to track surface elevation changes,
-gravimetry to measure mass loss, and climate models to simulate
-atmospheric forcing. Time series analysis applies Bayesian hierarchical
-models to estimate melt trends and their uncertainties. Wavelet
-transforms help identify periodic melt cycles or anomalies. Deep
-learning models such as RNNs can forecast future melting based on
-climate scenario inputs.
+A representative case lies in Antarctic ice sheet dynamics. Understanding the pace and pattern of melting involves multiple datasets: altimetry from satellites to track surface elevation changes, gravimetry to measure mass loss, and climate models to simulate atmospheric forcing. Time series analysis applies Bayesian hierarchical models to estimate melt trends and their uncertainties. Wavelet transforms help identify periodic melt cycles or anomalies. Deep learning models such as RNNs can forecast future melting based on climate scenario inputs.
 
-Challenges remain. Earth science data often suffer from missing records
-due to sensor failure or cloud cover. Interpolation and imputation
-methods must be statistically robust and transparent. The scale of
-data --- terabytes from satellites or sensor networks --- requires
-efficient storage and analysis methods. Real-time anomaly detection,
-once aspirational, now becomes possible with cloud computing and edge
-inference. As Earth observation moves to high-frequency streaming
-platforms, so too must time series methods evolve.
+Challenges remain. Earth science data often suffer from missing records due to sensor failure or cloud cover. Interpolation and imputation methods must be statistically robust and transparent. The scale of data --- terabytes from satellites or sensor networks --- requires efficient storage and analysis methods. Real-time anomaly detection, once aspirational, now becomes possible with cloud computing and edge inference. As Earth observation moves to high-frequency streaming platforms, so too must time series methods evolve.
 
-Interdisciplinary collaboration drives progress. Earth scientists, data
-scientists, and computer engineers now build models together. Time
-series analysis links these fields. It provides a shared language to
-interpret dynamic systems. The result is better predictions, clearer
-insights, and stronger responses to natural and human-made threats.
+Interdisciplinary collaboration drives progress. Earth scientists, data scientists, and computer engineers now build models together. Time series analysis links these fields. It provides a shared language to interpret dynamic systems. The result is better predictions, clearer insights, and stronger responses to natural and human-made threats.
 
-Time series analysis is a widely used method in Earth science. As
-datasets grow in scope and complexity, so does the need for
-sophisticated temporal analysis. With the right models and methods,
-scientists can see further, forecast more accurately, and respond more
-effectively to the urgent challenges facing the planet.
+Time series analysis is a widely used method in Earth science. As datasets grow in scope and complexity, so does the need for sophisticated temporal analysis. With the right models and methods, scientists can see further, forecast more accurately, and respond more effectively to the urgent challenges facing the planet.
