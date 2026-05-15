@@ -1,0 +1,17 @@
+[project]
+name = "time-series-analysis-in-earth-science"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = [
+    "earthpy>=0.9.4",
+    "imblearn>=0.0",
+    "matplotlib>=3.10.9",
+    "numpy>=2.4.4",
+    "pandas>=3.0.3",
+    "pywavelets>=1.9.0",
+    "requests>=2.34.2",
+    "scikit-learn>=1.8.0",
+    "seaborn>=0.13.2",
+    "statsmodels>=0.14.6",
+    "tqdm>=4.67.3",
+]
