@@ -124,7 +124,6 @@ plt.show()
 
 # Import necessary packages
 import os
-import warnings
 
 import earthpy as et
 import matplotlib.dates as mdates
@@ -135,7 +134,6 @@ import seaborn as sns
 from sklearn.metrics import mean_squared_error
 from statsmodels.tsa.statespace.sarimax import SARIMAX
 
-warnings.filterwarnings("ignore")
 
 # Handle date time conversions between pandas and matplotlib
 from pandas.plotting import register_matplotlib_converters
@@ -473,7 +471,6 @@ if __name__ == "__main__":
 # Description: Time Series Analysis of 2013 Colorado Flood
 
 import os
-import warnings
 
 import earthpy as et
 import matplotlib.dates as mdates
@@ -484,7 +481,6 @@ import seaborn as sns
 from sklearn.metrics import mean_squared_error
 from statsmodels.tsa.statespace.sarimax import SARIMAX
 
-warnings.filterwarnings("ignore")
 
 # Handle date time conversions
 from pandas.plotting import register_matplotlib_converters
