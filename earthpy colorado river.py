@@ -3,6 +3,7 @@
 Magics and shell lines are commented out. Run with a normal Python interpreter."""
 
 import os
+import warnings
 
 import earthpy as et
 import matplotlib.dates as mdates
@@ -246,7 +247,7 @@ def subset_time_period(df, start_date, end_date):
     return df.loc[start_date:end_date]
 
 
-def main() -> None:
+def download_example_data() -> None:
     data = et.data.get_data("cold-springs-fire")
 
     print("Data directory contents:")
@@ -276,6 +277,8 @@ def main() -> None:
         print("\nDataset head:")
         print(df.head())
 
+
+def notebook_step_002() -> None:
     plt.figure(figsize=(10, 6))
 
     plt.plot(df["date"], df["temperature"], label="Land Surface Temperature")
@@ -294,6 +297,8 @@ def main() -> None:
 
     plt.show()
 
+
+def set_the_date_column_as_the_index_for_decompositi() -> None:
     df.set_index("date", inplace=True)
 
     result = seasonal_decompose(df["temperature"], model="additive", period=365)
@@ -363,6 +368,10 @@ def main() -> None:
 
     plt.show()
 
+
+def earth_data_science_tutorial_blog() -> None:
+    warnings.filterwarnings("ignore")
+
     register_matplotlib_converters()
 
     sns.set(font_scale=1.5, style="whitegrid")
@@ -375,106 +384,83 @@ def main() -> None:
         "colorado-flood", "discharge", "06730200-discharge-daily-1986-2013.csv"
     )
 
-    print("Loading and processing data...")
+    if __name__ == "__main__":
+        print("Loading and processing data...")
+        discharge_df = process_discharge_data(stream_discharge_path)
+        fig1, ax1 = plot_discharge(discharge_df)
+        save_plot(fig1, "full_timeseries.png")
+        flood_period = subset_time_period(discharge_df, "2013-08-01", "2013-10-31")
+        fig2, ax2 = plot_discharge(
+            flood_period, "Stream Discharge During 2013 Colorado Flood"
+        )
+        save_plot(fig2, "flood_period.png")
+        weekly_data = resample_weekly(flood_period)
+        fig3, ax3 = plot_discharge(weekly_data, "Weekly Maximum Stream Discharge")
+        save_plot(fig3, "weekly_discharge.png")
+        print("Fitting SARIMA model...")
+        train, test, predictions, model_results = fit_sarima_model(
+            discharge_df, train_size=0.8, order=(2, 1, 2), seasonal_order=(1, 1, 1, 12)
+        )
+        forecast = model_results.get_forecast(len(test))
+        conf_int = forecast.conf_int()
+        confidence_intervals = {
+            "lower": conf_int.iloc[:, 0],
+            "upper": conf_int.iloc[:, 1],
+        }
+        rmse = np.sqrt(mean_squared_error(test["disValue"], predictions))
+        print(f"RMSE: {rmse:.2f}")
+        fig4, ax4 = plot_sarima_results(
+            train,
+            test,
+            predictions,
+            confidence_intervals,
+            "SARIMA Forecast vs Actual Discharge",
+        )
+        save_plot(fig4, "sarima_forecast.png")
+        last_year = discharge_df.last("365D")
+        last_year_train = train[train.index >= last_year.index[0]]
+        last_year_test = test[test.index >= last_year.index[0]]
+        last_year_pred = predictions[predictions.index >= last_year.index[0]]
+        last_year_ci = {
+            "lower": confidence_intervals["lower"][
+                confidence_intervals["lower"].index >= last_year.index[0]
+            ],
+            "upper": confidence_intervals["upper"][
+                confidence_intervals["upper"].index >= last_year.index[0]
+            ],
+        }
+        fig5, ax5 = plot_sarima_results(
+            last_year_train,
+            last_year_test,
+            last_year_pred,
+            last_year_ci,
+            "SARIMA Forecast vs Actual Discharge (Last Year)",
+        )
+        save_plot(fig5, "sarima_forecast_zoomed.png")
+        plt.show()
 
-    discharge_df = process_discharge_data(stream_discharge_path)
 
-    fig1, ax1 = plot_discharge(discharge_df)
-
-    save_plot(fig1, "full_timeseries.png")
-
-    flood_period = subset_time_period(discharge_df, "2013-08-01", "2013-10-31")
-
-    fig2, ax2 = plot_discharge(
-        flood_period, "Stream Discharge During 2013 Colorado Flood"
-    )
-
-    save_plot(fig2, "flood_period.png")
-
-    weekly_data = resample_weekly(flood_period)
-
-    fig3, ax3 = plot_discharge(weekly_data, "Weekly Maximum Stream Discharge")
-
-    save_plot(fig3, "weekly_discharge.png")
-
-    print("Fitting SARIMA model...")
-
-    train, test, predictions, model_results = fit_sarima_model(
-        discharge_df, train_size=0.8, order=(2, 1, 2), seasonal_order=(1, 1, 1, 12)
-    )
-
-    forecast = model_results.get_forecast(len(test))
-
-    conf_int = forecast.conf_int()
-
-    confidence_intervals = {"lower": conf_int.iloc[:, 0], "upper": conf_int.iloc[:, 1]}
-
-    rmse = np.sqrt(mean_squared_error(test["disValue"], predictions))
-
-    print(f"RMSE: {rmse:.2f}")
-
-    fig4, ax4 = plot_sarima_results(
-        train,
-        test,
-        predictions,
-        confidence_intervals,
-        "SARIMA Forecast vs Actual Discharge",
-    )
-
-    save_plot(fig4, "sarima_forecast.png")
-
-    last_year = discharge_df.last("365D")
-
-    last_year_train = train[train.index >= last_year.index[0]]
-
-    last_year_test = test[test.index >= last_year.index[0]]
-
-    last_year_pred = predictions[predictions.index >= last_year.index[0]]
-
-    last_year_ci = {
-        "lower": confidence_intervals["lower"][
-            confidence_intervals["lower"].index >= last_year.index[0]
-        ],
-        "upper": confidence_intervals["upper"][
-            confidence_intervals["upper"].index >= last_year.index[0]
-        ],
-    }
-
-    fig5, ax5 = plot_sarima_results(
-        last_year_train,
-        last_year_test,
-        last_year_pred,
-        last_year_ci,
-        "SARIMA Forecast vs Actual Discharge (Last Year)",
-    )
-
-    save_plot(fig5, "sarima_forecast_zoomed.png")
-
-    plt.show()
-
+def add_to_imports() -> None:
     precip_path = os.path.join(
         "colorado-flood", "precipitation", "805325-precip-daily-2003-2013.csv"
     )
 
-    print("Loading and processing discharge data...")
+    if __name__ == "__main__":
+        print("Loading and processing discharge data...")
+        discharge_df = process_discharge_data(stream_discharge_path)
+        print("Loading and processing precipitation data...")
+        precip_df = process_precip_data(precip_path)
+        print("Creating combined discharge and precipitation plot...")
+        fig6, axes = plot_discharge_and_precip(
+            discharge_df, precip_df, "2013-09-01", "2013-09-30"
+        )
+        save_plot(fig6, "discharge_and_precip_flood.png")
+        flood_precip = precip_df.loc["2013-09-01":"2013-09-30", "HPCP"].sum()
+        print(f"Total precipitation during flood period: {flood_precip:.1f} mm")
 
-    discharge_df = process_discharge_data(stream_discharge_path)
 
-    print("Loading and processing precipitation data...")
-
-    precip_df = process_precip_data(precip_path)
-
-    print("Creating combined discharge and precipitation plot...")
-
-    fig6, axes = plot_discharge_and_precip(
-        discharge_df, precip_df, "2013-09-01", "2013-09-30"
-    )
-
-    save_plot(fig6, "discharge_and_precip_flood.png")
-
-    flood_precip = precip_df.loc["2013-09-01":"2013-09-30", "HPCP"].sum()
-
-    print(f"Total precipitation during flood period: {flood_precip:.1f} mm")
+def earth_data_science_tutorial_blog_2() -> None:
+    warnings.filterwarnings("ignore")
 
     register_matplotlib_converters()
 
@@ -492,86 +478,83 @@ def main() -> None:
         "colorado-flood", "precipitation", "805325-precip-daily-2003-2013.csv"
     )
 
-    print("Loading and processing data...")
+    if __name__ == "__main__":
+        print("Loading and processing data...")
+        discharge_df = process_discharge_data(stream_discharge_path)
+        precip_df = process_precip_data(precip_path)
+        flood_metrics = analyze_flood_metrics(
+            discharge_df, precip_df, "2013-09-01", "2013-09-30"
+        )
+        print("\nFlood Metrics:")
+        for key, value in flood_metrics.items():
+            print(f"{key}: {value}")
+        print("\nGenerating plots...")
+        fig1, ax1 = plot_discharge(discharge_df)
+        save_plot(fig1, "full_timeseries.png")
+        fig2, axes2 = plot_discharge_and_precip(
+            discharge_df, precip_df, "2013-09-01", "2013-09-30"
+        )
+        save_plot(fig2, "flood_period_combined.png")
+        print("\nFitting SARIMA model...")
+        train, test, predictions, model_results = fit_sarima_model(
+            discharge_df, train_size=0.8, order=(2, 1, 2), seasonal_order=(1, 1, 1, 12)
+        )
+        forecast = model_results.get_forecast(len(test))
+        conf_int = forecast.conf_int()
+        confidence_intervals = {
+            "lower": conf_int.iloc[:, 0],
+            "upper": conf_int.iloc[:, 1],
+        }
+        rmse = np.sqrt(mean_squared_error(test["disValue"], predictions))
+        print(f"RMSE: {rmse:.2f}")
+        fig3, ax3 = plot_sarima_results(
+            train,
+            test,
+            predictions,
+            confidence_intervals,
+            "SARIMA Forecast vs Actual Discharge",
+        )
+        save_plot(fig3, "sarima_forecast.png")
+        plt.show()
 
-    discharge_df = process_discharge_data(stream_discharge_path)
 
-    precip_df = process_precip_data(precip_path)
+def add_these_imports_at_the_top() -> None:
+    if __name__ == "__main__":
+        print("\nCreating animation...")
+        anim = create_animated_plot(
+            discharge_df,
+            precip_df,
+            "2013-09-01",
+            "2013-09-30",
+            interval=50,
+            save_path="flood_animation.gif",
+        )
+        plt.show()
 
-    flood_metrics = analyze_flood_metrics(
-        discharge_df, precip_df, "2013-09-01", "2013-09-30"
-    )
 
-    print("\nFlood Metrics:")
+def add_these_imports_at_the_top_2() -> None:
+    if __name__ == "__main__":
+        print("\nCreating animation...")
+        anim = create_animated_plot(
+            discharge_df,
+            precip_df,
+            "2013-09-01",
+            "2013-09-30",
+            interval=50,
+            save_path="flood_animation.gif",
+        )
+        plt.show()
 
-    for key, value in flood_metrics.items():
-        print(f"{key}: {value}")
 
-    print("\nGenerating plots...")
-
-    fig1, ax1 = plot_discharge(discharge_df)
-
-    save_plot(fig1, "full_timeseries.png")
-
-    fig2, axes2 = plot_discharge_and_precip(
-        discharge_df, precip_df, "2013-09-01", "2013-09-30"
-    )
-
-    save_plot(fig2, "flood_period_combined.png")
-
-    print("\nFitting SARIMA model...")
-
-    train, test, predictions, model_results = fit_sarima_model(
-        discharge_df, train_size=0.8, order=(2, 1, 2), seasonal_order=(1, 1, 1, 12)
-    )
-
-    forecast = model_results.get_forecast(len(test))
-
-    conf_int = forecast.conf_int()
-
-    confidence_intervals = {"lower": conf_int.iloc[:, 0], "upper": conf_int.iloc[:, 1]}
-
-    rmse = np.sqrt(mean_squared_error(test["disValue"], predictions))
-
-    print(f"RMSE: {rmse:.2f}")
-
-    fig3, ax3 = plot_sarima_results(
-        train,
-        test,
-        predictions,
-        confidence_intervals,
-        "SARIMA Forecast vs Actual Discharge",
-    )
-
-    save_plot(fig3, "sarima_forecast.png")
-
-    plt.show()
-
-    print("\nCreating animation...")
-
-    anim = create_animated_plot(
-        discharge_df,
-        precip_df,
-        "2013-09-01",
-        "2013-09-30",
-        interval=50,
-        save_path="flood_animation.gif",
-    )
-
-    plt.show()
-
-    print("\nCreating animation...")
-
-    anim = create_animated_plot(
-        discharge_df,
-        precip_df,
-        "2013-09-01",
-        "2013-09-30",
-        interval=50,
-        save_path="flood_animation.gif",
-    )
-
-    plt.show()
+def main() -> None:
+    download_example_data()
+    notebook_step_002()
+    set_the_date_column_as_the_index_for_decompositi()
+    earth_data_science_tutorial_blog()
+    add_to_imports()
+    earth_data_science_tutorial_blog_2()
+    add_these_imports_at_the_top()
+    add_these_imports_at_the_top_2()
 
 
 if __name__ == "__main__":
