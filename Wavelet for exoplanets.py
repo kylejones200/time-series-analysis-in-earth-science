@@ -24,6 +24,8 @@ from sklearn.metrics import (
 from sklearn.model_selection import cross_val_score, train_test_split
 from sklearn.preprocessing import LabelEncoder, StandardScaler
 
+logger = logging.getLogger(__name__)
+
 
 def evaluate_model(
     clf: BaseEstimator,
@@ -33,7 +35,6 @@ def evaluate_model(
 ) -> dict[str, Any]:
     """
     Evaluate model performance using multiple metrics and visualizations.
-
     Parameters
     ----------
     clf : BaseEstimator
@@ -50,7 +51,7 @@ def evaluate_model(
     Dict[str, Any]
         Dictionary containing evaluation metrics and predictions
     """
-    y_pred = clf.predict(X_test)
+    clf.predict(X_test)
     y_pred_proba = clf.predict_proba(X_test)[:, 1]
     thresholds = np.arange(0.1, 0.9, 0.1)
     best_threshold = 0.5
@@ -85,7 +86,6 @@ def extract_wavelet_features(
 ) -> list[float]:
     """
     Extract wavelet features from flux time series data.
-
     Parameters
     ----------
     flux_data : np.ndarray
@@ -130,7 +130,6 @@ def extract_wavelet_features(
 def load_model(filename: str) -> BaseEstimator:
     """
     Load trained model from disk.
-
     Parameters
     ----------
     filename : str
@@ -149,9 +148,7 @@ def load_model(filename: str) -> BaseEstimator:
 def main() -> None:
     """
     Main function to run the planet detection pipeline.
-
     Loads data, trains the model, and evaluates performance.
-
     Returns
     -------
     None
@@ -161,7 +158,7 @@ def main() -> None:
         logger.info("\nSample of first few rows:")
         logger.info(df.head())
         clf, X_test, y_test, class_names = train_planet_detector(df, "LABEL")
-        results = evaluate_model(clf, X_test, y_test, class_names)
+        evaluate_model(clf, X_test, y_test, class_names)
         save_model(clf, "planet_detector_model.joblib")
     except Exception as e:
         logger.error("An error occurred: %s", str(e))
@@ -171,7 +168,6 @@ def main() -> None:
 def plot_confusion_matrix(cm: NDArray[np.int64], class_names: list[str]) -> None:
     """
     Plot confusion matrix as a heatmap.
-
     Parameters
     ----------
     cm : np.ndarray
@@ -202,7 +198,6 @@ def plot_confusion_matrix(cm: NDArray[np.int64], class_names: list[str]) -> None
 def plot_feature_importance(feature_importance: pd.DataFrame) -> None:
     """
     Plot top 10 feature importance.
-
     Parameters
     ----------
     feature_importance : pd.DataFrame
@@ -226,7 +221,6 @@ def plot_precision_recall_curve(
 ) -> None:
     """
     Plot Precision-Recall curve with AUC score.
-
     Parameters
     ----------
     y_test : np.ndarray
@@ -257,7 +251,6 @@ def plot_roc_curve(
 ) -> None:
     """
     Plot ROC curve with AUC score.
-
     Parameters
     ----------
     y_test : np.ndarray
@@ -289,7 +282,6 @@ def plot_roc_curve(
 def process_dataset(data: NDArray[np.float64]) -> NDArray[np.float64]:
     """
     Process entire dataset and extract wavelet features for each time series.
-
     Parameters
     ----------
     data : np.ndarray
@@ -320,7 +312,6 @@ def process_dataset(data: NDArray[np.float64]) -> NDArray[np.float64]:
 def save_model(clf: BaseEstimator, filename: str) -> None:
     """
     Save trained model to disk.
-
     Parameters
     ----------
     clf : BaseEstimator
@@ -342,7 +333,6 @@ def train_planet_detector(
 ) -> tuple[BaseEstimator, NDArray[np.float64], NDArray[np.int64], list[str]]:
     """
     Train a Random Forest classifier for planet detection.
-
     Parameters
     ----------
     df : pd.DataFrame
@@ -405,17 +395,11 @@ def train_planet_detector(
 
 def main() -> None:
     df = pd.read_csv("exoTrain.csv")
-
     train_planet_detector(df, label_column="LABEL")
-
     main()
-
     main()
-
     logging.basicConfig(level=logging.INFO)
-
-    logger = logging.getLogger(__name__)
-
+    logging.getLogger(__name__)
     main()
 
 

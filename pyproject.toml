@@ -3,6 +3,8 @@ name = "time-series-analysis-in-earth-science"
 version = "0.1.0"
 requires-python = ">=3.12"
 dependencies = [
+    "pydantic>=2.10.0",
+    "pytest>=8.0",
     "earthpy>=0.9.4",
     "imblearn>=0.0",
     "matplotlib>=3.10.9",
@@ -15,3 +17,7 @@ dependencies = [
     "statsmodels>=0.14.6",
     "tqdm>=4.67.3",
 ]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]

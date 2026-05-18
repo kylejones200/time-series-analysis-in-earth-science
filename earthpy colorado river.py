@@ -109,7 +109,6 @@ def fit_sarima_model(
 def get_noaa_precip_data(station_id, start_date, end_date, token):
     """
     Fetch precipitation data from NOAA API
-
     Parameters:
     -----------
     station_id: str, NOAA station identifier
@@ -249,19 +248,14 @@ def subset_time_period(df, start_date, end_date):
 
 def download_example_data() -> None:
     data = et.data.get_data("cold-springs-fire")
-
     print("Data directory contents:")
-
     print(os.listdir(data))
-
     possible_paths = [
         os.path.join(data, "modis_lst_example.csv"),
         os.path.join(data, "outputs", "modis_lst_example.csv"),
         os.path.join(data, "data", "modis_lst_example.csv"),
     ]
-
     lst_path = None
-
     for path in possible_paths:
         if os.path.exists(path):
             lst_path = path
@@ -280,110 +274,66 @@ def download_example_data() -> None:
 
 def notebook_step_002() -> None:
     plt.figure(figsize=(10, 6))
-
     plt.plot(df["date"], df["temperature"], label="Land Surface Temperature")
-
     plt.title("Land Surface Temperature Over Time")
-
     plt.xlabel("Date")
-
     plt.ylabel("Temperature (°C)")
-
     plt.legend()
-
     plt.grid(True)
-
     plt.savefig("land_surface_temperature_over_time.png")
-
     plt.show()
 
 
 def set_the_date_column_as_the_index_for_decompositi() -> None:
     df.set_index("date", inplace=True)
-
     result = seasonal_decompose(df["temperature"], model="additive", period=365)
-
     result.plot()
-
     plt.savefig("seasonal_decomposition.png")
-
     plt.show()
-
     rolling_mean = df["temperature"].rolling(window=30).mean()
-
     rolling_std = df["temperature"].rolling(window=30).std()
-
     anomalies = df[
         (df["temperature"] > rolling_mean + 2 * rolling_std)
         | (df["temperature"] < rolling_mean - 2 * rolling_std)
     ]
-
     plt.figure(figsize=(10, 6))
-
     plt.plot(df.index, df["temperature"], label="Temperature")
-
     plt.scatter(
         anomalies.index, anomalies["temperature"], color="red", label="Anomalies"
     )
-
     plt.title("Temperature Anomalies")
-
     plt.xlabel("Date")
-
     plt.ylabel("Temperature (°C)")
-
     plt.legend()
-
     plt.grid(True)
-
     plt.savefig("temperature_anomalies.png")
-
     plt.show()
-
     model = ARIMA(df["temperature"], order=(5, 1, 0))
-
     fit = model.fit()
-
     forecast = fit.forecast(steps=365)
-
     plt.figure(figsize=(10, 6))
-
     plt.plot(df.index, df["temperature"], label="Historical Temperature")
-
     plt.plot(
         pd.date_range(df.index[-1], periods=365, freq="D"), forecast, label="Forecast"
     )
-
     plt.title("Temperature Forecast")
-
     plt.xlabel("Date")
-
     plt.ylabel("Temperature (°C)")
-
     plt.legend()
-
     plt.grid(True)
-
     plt.savefig("temperature_forecast.png")
-
     plt.show()
 
 
 def earth_data_science_tutorial_blog() -> None:
     warnings.filterwarnings("ignore")
-
     register_matplotlib_converters()
-
     sns.set(font_scale=1.5, style="whitegrid")
-
-    data = et.data.get_data("colorado-flood")
-
+    et.data.get_data("colorado-flood")
     os.chdir(os.path.join(et.io.HOME, "earth-analytics", "data"))
-
     stream_discharge_path = os.path.join(
         "colorado-flood", "discharge", "06730200-discharge-daily-1986-2013.csv"
     )
-
     if __name__ == "__main__":
         print("Loading and processing data...")
         discharge_df = process_discharge_data(stream_discharge_path)
@@ -444,7 +394,6 @@ def add_to_imports() -> None:
     precip_path = os.path.join(
         "colorado-flood", "precipitation", "805325-precip-daily-2003-2013.csv"
     )
-
     if __name__ == "__main__":
         print("Loading and processing discharge data...")
         discharge_df = process_discharge_data(stream_discharge_path)
@@ -461,23 +410,16 @@ def add_to_imports() -> None:
 
 def earth_data_science_tutorial_blog_2() -> None:
     warnings.filterwarnings("ignore")
-
     register_matplotlib_converters()
-
     sns.set(font_scale=1.5, style="whitegrid")
-
-    data = et.data.get_data("colorado-flood")
-
+    et.data.get_data("colorado-flood")
     os.chdir(os.path.join(et.io.HOME, "earth-analytics", "data"))
-
     stream_discharge_path = os.path.join(
         "colorado-flood", "discharge", "06730200-discharge-daily-1986-2013.csv"
     )
-
     precip_path = os.path.join(
         "colorado-flood", "precipitation", "805325-precip-daily-2003-2013.csv"
     )
-
     if __name__ == "__main__":
         print("Loading and processing data...")
         discharge_df = process_discharge_data(stream_discharge_path)
@@ -521,7 +463,7 @@ def earth_data_science_tutorial_blog_2() -> None:
 def add_these_imports_at_the_top() -> None:
     if __name__ == "__main__":
         print("\nCreating animation...")
-        anim = create_animated_plot(
+        create_animated_plot(
             discharge_df,
             precip_df,
             "2013-09-01",
@@ -535,7 +477,7 @@ def add_these_imports_at_the_top() -> None:
 def add_these_imports_at_the_top_2() -> None:
     if __name__ == "__main__":
         print("\nCreating animation...")
-        anim = create_animated_plot(
+        create_animated_plot(
             discharge_df,
             precip_df,
             "2013-09-01",
