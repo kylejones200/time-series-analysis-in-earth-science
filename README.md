@@ -11,14 +11,7 @@ Environmental data often arrive as time series. Climate records track surface te
 
 Each of these time series carries multiple layers. Long-term trends reveal directional change. Seasonal cycles reflect planetary tilt, solar radiation, and orbital mechanics. Random noise, instrument error, or unknown influences make interpretation more difficult. Analysts use time series decomposition to separate these elements. The trend component may show warming or drying over decades. The seasonal component may reflect recurring droughts or melt seasons. The residual captures what remains unexplained.
 
-## About
 
-Place the code for this article in this repository.
-The original article export is saved as `article.md`.
-
-## Files
-
-Add your `.ipynb`, `.py`, `.yaml`, `.js`, `.ts`, or other project files here.
 
 ## Disclaimer
 

@@ -133,9 +133,8 @@ def get_noaa_precip_data(station_id, start_date, end_date, token):
         df["date"] = pd.to_datetime(df["date"])
         df.set_index("date", inplace=True)
         return df
-    else:
-        print(f"Error: {response.status_code}")
-        return None
+    print(f"Error: {response.status_code}")
+    return None
 
 
 def plot_discharge(df, title="Stream Discharge Over Time"):
